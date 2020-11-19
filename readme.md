@@ -16,8 +16,8 @@ And many more...
 
 Before we proceed, please install with the correct order:
 
-1. Desktop version
-2. Android version
+1. Desktop app
+2. Android app
 
 Next, we access the Mobile version of FGI Portal Mobile (Android) based, from:
 '''
@@ -35,7 +35,7 @@ Your logging will be automatically proceed!
 
 ### Keep Contact! 
 
-For enterprise usage, it's better to modified the entities, inside: 
+For enterprise usage, it's better to modify the entities, inside: 
 
 1) MySQL Database
 2) Object Call
