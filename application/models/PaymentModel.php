@@ -90,6 +90,110 @@ class PaymentModel extends CI_Model {
 		
 	}
 	
+	public function add($username, $amount, $method, $filename){
+		
+		$stat = 'invalid';
+		
+		$dateCreated = date('Y-m-d H:i:s');
+		
+		
+			$data = array(
+				'username' 			=> $username,
+				'amount' 			=> $amount,
+				'method' 	=> $method
+			);
+		
+		// we use screenshot field as picture file
+		// if its not null
+		if($filename != null) {
+			$data['screenshot'] = $filename;
+		}
+		
+		$this->db->insert('data_payment', $data);
+		$stat = 'valid';
+		
+		return $this->generateRespond($stat);
+	}
+		
+	public function delete($idIn){
+		
+		$stat = 'invalid';
+		
+		$whereComp = array(
+			'id' => $idIn
+		);
+		
+		$this->db->where($whereComp);
+		$this->db->delete('data_payment');
+		
+		if($this->db->affected_rows() > 0){
+				$stat = 'valid';
+		}
+		
+		return $this->generateRespond($stat);
+	}
+
+	public function getDetail($idIn){
+		
+		$endResult = $this->generateRespond('invalid');
+		
+		$multiParam = array(
+			'id' => $idIn
+		);
+		
+		$this->db->where($multiParam);		
 	
+		$query = $this->db->get('data_payment');
+		
+		foreach ($query->result() as $row)
+		{
+			$endResult['status'] = 'valid';
+			
+			$data = array(
+				'id' 				=> $row->id,
+				'username' 			=> $row->username,
+				'amount'			=> $row->amount,
+				'method' 			=> $row->method,
+				'screenshot' 		=> $row->screenshot,
+				'date_created' 		=> $row->date_created
+			);
+		
+			$endResult['multi_data'] = $data;
+		}
+		
+		if($endResult['status'] == 'invalid'){
+			unset($endResult['multi_data']);
+		}
+		
+		return $endResult;
+		
+	}
+
+	public function edit($id, $username, $amount, $method, $filename){
+		
+		$endRes = $this->generateRespond('invalid');
+		
+			$data = array(
+			'username' 		=> $username,
+			'amount' 		=> $amount,
+			'method' 		=> $method
+			);
+		
+		// we use screenshot field as picture file
+		// if its not null
+		if($filename != null) {
+			$data['screenshot'] = $filename;
+		}
+		
+		$this->db->where('id', $id);
+		$this->db->update('data_payment', $data);
+		
+		if($this->db->affected_rows() > 0){
+				$endRes = $this->generateRespond('valid');
+		}
+		
+		return $endRes;
+		
+	}
 	
 }

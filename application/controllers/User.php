@@ -71,6 +71,47 @@ class User extends CI_Controller {
 		
 	}
 	
+	public function update(){
+		
+		$id 		= $this->input->post('id');
+		$username 	= $this->input->post('username');
+		$pass 		= $this->input->post('password');
+		$email 		= $this->input->post('email');
+		$address 	= $this->input->post('address');
+		$mobile 	= $this->input->post('mobile');
+		
+		$propic		= null;
+		
+		$key 		= 'propic';
+		
+		if(isset($_FILES[$key])) {
+			// if there image given'
+			// proceed the uploads...
+			//$new_image_name = 'propic_' . str_replace(str_split(' ()\\/,:*?"<>|'), '', $_FILES[$key]['name']);
+			
+			$new_image_name = time() . '_' . str_replace(str_split(' ()\\/,:*?"<>|'), '', $_FILES[$key]['name']);
+	
+			//echo $_FILES[$key]['name'];
+	
+		$filename = $new_image_name;
+	
+		$config['upload_path'] = 'images/propic/'; 
+		$config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
+		$config['file_name'] = $new_image_name;
+		
+		$this->load->library('upload', $config);
+		$uploadRes = $this->upload->do_upload($key);
+		// change the name accordingly
+		$propic = $filename;
+			
+		}
+		
+		$endRespond = $this->UserModel->edit($id, $username, $pass, $email, $address, $mobile, $propic);
+		
+		echo json_encode($endRespond);
+		
+	}
+	
 	// this is for ADMIN
 	public function all(){
 		
@@ -88,6 +129,7 @@ class User extends CI_Controller {
 		
 	}
 	
+	// user/picture
 	public function picture(){
 		// we dont use token for accessing picture
 		// because it's for public usage
@@ -96,11 +138,13 @@ class User extends CI_Controller {
 		//$file = 'logo.png';
 		$file 	= $this->input->get('propic');
 		
-		$targetFile = 'images/' . $file;
+		$targetFile = 'images/propic/' . $file;
 		
 		force_download($targetFile,NULL);
 		
 	}
+	
+
 	
 	public function profile(){
 		
@@ -131,9 +175,12 @@ class User extends CI_Controller {
 		
 	}
 	
+	// this is for client usage
 	public function profileSave(){
 		$v = $this->validateToken();
 		
+		if($v){
+			
 		$username = $this->input->post('username');
 		$pass = $this->input->post('password');
 		$email = $this->input->post('email');
@@ -141,8 +188,6 @@ class User extends CI_Controller {
 		$mobile = $this->input->post('mobile');
 		$tmid = $this->input->post('tmv_id');
 		$tmpass = $this->input->post('tmv_pass');
-		
-		if($v){
 		
 			$keyGenerated = $this->UserModel->update($username, $pass);
 		

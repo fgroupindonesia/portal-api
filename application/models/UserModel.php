@@ -41,6 +41,36 @@ class UserModel extends CI_Model {
 		return $this->generateRespond($stat);
 	}
 	
+	public function edit($id, $usernameIn, $passIn, $emailIn, $addressIn, $mobileIn, $propicIn){
+		
+		$endRes = $this->generateRespond('invalid');
+		
+		$data = array(
+			'username' 	=> $usernameIn,
+			'pass' 		=> $passIn,
+			'email' 	=> $emailIn,
+			'address' 	=> $addressIn,
+			'mobile' 	=> $mobileIn
+		);
+		
+		// we use propic field as picture file
+		// if its not null
+		if($propicIn != null) {
+			$data['propic'] = $propicIn;
+		}
+		
+		$this->db->where('id', $id);
+		$this->db->update('data_user', $data);
+		
+		if($this->db->affected_rows() > 0){
+				$endRes = $this->generateRespond('valid');
+		}
+		
+		return $endRes;
+		
+	}
+		
+	
 	public function checkDuplicates($emailIn, $usernameIn){
 		
 		$duplicate = false;
