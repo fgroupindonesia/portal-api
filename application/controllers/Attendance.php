@@ -164,4 +164,16 @@ class Attendance extends CI_Controller {
 		
 	}	
 
+	public function deleteSignature(){
+		$v = $this->validateToken();
+		
+		if($v){
+		
+		$idIn 			= $this->input->post('id');
+		$endRespond 	= $this->AttendanceModel->deleteSignature($idIn);
+		echo json_encode($endRespond);
+		
+		}
+	}
+
 }

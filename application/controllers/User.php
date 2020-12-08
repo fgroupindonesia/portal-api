@@ -73,12 +73,19 @@ class User extends CI_Controller {
 	
 	public function update(){
 		
+		$v = $this->validateToken();
+		
+		if($v){
+		
 		$id 		= $this->input->post('id');
 		$username 	= $this->input->post('username');
 		$pass 		= $this->input->post('password');
 		$email 		= $this->input->post('email');
 		$address 	= $this->input->post('address');
 		$mobile 	= $this->input->post('mobile');
+		
+		$tmv_id 	= $this->input->post('tmv_id');
+		$tmv_pass 	= $this->input->post('tmv_pass');
 		
 		$propic		= null;
 		
@@ -106,9 +113,11 @@ class User extends CI_Controller {
 			
 		}
 		
-		$endRespond = $this->UserModel->edit($id, $username, $pass, $email, $address, $mobile, $propic);
+		$endRespond = $this->UserModel->edit($id, $username, $pass, $email, $address, $mobile, $propic, $tmv_id, $tmv_pass);
 		
 		echo json_encode($endRespond);
+		
+		}
 		
 	}
 	
@@ -144,7 +153,18 @@ class User extends CI_Controller {
 		
 	}
 	
-
+	// user/picture/delete
+	public function deletePicture(){
+		$v = $this->validateToken();
+		
+		if($v){
+		
+		$idIn 			= $this->input->post('id');
+		$endRespond 	= $this->UserModel->deletePicture($idIn);
+		echo json_encode($endRespond);
+		
+		}
+	}
 	
 	public function profile(){
 		
@@ -175,23 +195,5 @@ class User extends CI_Controller {
 		
 	}
 	
-	// this is for client usage
-	public function profileSave(){
-		$v = $this->validateToken();
-		
-		if($v){
-			
-		$username = $this->input->post('username');
-		$pass = $this->input->post('password');
-		$email = $this->input->post('email');
-		$address = $this->input->post('address');
-		$mobile = $this->input->post('mobile');
-		$tmid = $this->input->post('tmv_id');
-		$tmpass = $this->input->post('tmv_pass');
-		
-			$keyGenerated = $this->UserModel->update($username, $pass);
-		
-		}
-		
-	}
+	
 }

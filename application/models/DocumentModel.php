@@ -82,7 +82,14 @@ class DocumentModel extends CI_Model {
 	public function edit($idIn, $titleIn, $descriptionIn, $usernameIn, $urlIn, $filenameIn){
 		
 		$endRes = $this->generateRespond('invalid');
-		$data = array();
+		
+		$data = array(
+			'title' 		=> $titleIn,
+			'description' 	=> $descriptionIn,
+			'username' 		=> $usernameIn,
+			'url' 			=> $urlIn
+			);
+		
 		
 		// delete the picture previously
 		// because now the picture is different
@@ -96,24 +103,8 @@ class DocumentModel extends CI_Model {
 			unlink($targetFile);
 			
 			// now updating the data
-			$data = array(
-			'title' 		=> $titleIn,
-			'description' 	=> $descriptionIn,
-			'filename' 		=> $filenameIn,
-			'username' 		=> $usernameIn,
-			'url' 			=> $urlIn
-			);
+			$data['filename'] = $filenameIn;
 			
-		}else{
-			
-			// but if the file is still empty
-			// we dont change the existing
-			$data = array(
-			'title' 		=> $titleIn,
-			'description' 	=> $descriptionIn,
-			'username' 		=> $usernameIn,
-			'url' 			=> $urlIn
-			);
 		}
 		
 		

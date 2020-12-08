@@ -169,4 +169,25 @@ class AttendanceModel extends CI_Model {
 		
 	}
 	
+	public function deleteSignature($idIn){
+		
+		$stat = 'invalid';
+		
+		$whereComp = array(
+			'id' => $idIn
+		);
+		
+		$newData = array(
+			'signature' => 'not available'
+		);
+		
+		$this->db->where($whereComp);
+		$this->db->update('data_attendance', $newData);
+		
+		if($this->db->affected_rows() > 0){
+				$stat = 'valid';
+		}
+		
+		return $this->generateRespond($stat);
+	}
 }

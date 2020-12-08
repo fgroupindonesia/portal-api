@@ -41,7 +41,7 @@ class UserModel extends CI_Model {
 		return $this->generateRespond($stat);
 	}
 	
-	public function edit($id, $usernameIn, $passIn, $emailIn, $addressIn, $mobileIn, $propicIn){
+	public function edit($id, $usernameIn, $passIn, $emailIn, $addressIn, $mobileIn, $propicIn, $tmv_idIn, $tmv_passIn){
 		
 		$endRes = $this->generateRespond('invalid');
 		
@@ -57,6 +57,14 @@ class UserModel extends CI_Model {
 		// if its not null
 		if($propicIn != null) {
 			$data['propic'] = $propicIn;
+		}
+		
+		if($tmv_idIn != null){
+			$data['tmv_id'] = $tmv_idIn;
+		}
+		
+		if($tmv_passIn != null){
+			$data['tmv_pass'] = $tmv_passIn;
 		}
 		
 		$this->db->where('id', $id);
@@ -233,6 +241,28 @@ class UserModel extends CI_Model {
 		return $endResult;
 	}
 	
+	public function deletePicture($idIn){
+		
+		$stat = 'invalid';
+		
+		$whereComp = array(
+			'id' => $idIn
+		);
+		
+		$newData = array(
+			'propic' => 'default.png'
+		);
+		
+		$this->db->where($whereComp);
+		$this->db->update('data_user', $newData);
+		
+		if($this->db->affected_rows() > 0){
+				$stat = 'valid';
+		}
+		
+		return $this->generateRespond($stat);
+	}	
+	
 	public function getProfile($usernameIn){
 		
 		$endResult = $this->generateRespond('invalid');
@@ -257,6 +287,8 @@ class UserModel extends CI_Model {
 				'address' 		=> $row->address,
 				'propic' 		=> $row->propic,
 				'mobile' 		=> $row->mobile,
+				'tmv_id' 		=> $row->tmv_id,
+				'tmv_pass' 		=> $row->tmv_pass,
 				'date_created' 	=> $row->date_created
 			);
 		

@@ -59,11 +59,14 @@ class PaymentModel extends CI_Model {
 		
 		$endResult = $this->generateRespond('invalid');
 		
-		$multiParam = array(
-			'username' => $usernameIn
-		);
+		if($usernameIn != 'admin'){
+			$multiParam = array(
+				'username' => $usernameIn
+			);
+			
+			$this->db->where($multiParam);		
 		
-		$this->db->where($multiParam);		
+		}
 		$query = $this->db->get('data_payment');
 		
 		foreach ($query->result() as $row)
@@ -125,6 +128,28 @@ class PaymentModel extends CI_Model {
 		
 		$this->db->where($whereComp);
 		$this->db->delete('data_payment');
+		
+		if($this->db->affected_rows() > 0){
+				$stat = 'valid';
+		}
+		
+		return $this->generateRespond($stat);
+	}
+
+	public function deleteScreenshot($idIn){
+		
+		$stat = 'invalid';
+		
+		$whereComp = array(
+			'id' => $idIn
+		);
+		
+		$newData = array(
+			'screenshot' => 'not available'
+		);
+		
+		$this->db->where($whereComp);
+		$this->db->update('data_payment', $newData);
 		
 		if($this->db->affected_rows() > 0){
 				$stat = 'valid';

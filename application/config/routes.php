@@ -53,3 +53,6 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['user/profile/save'] = 'User/profileSave';
+$route['payment/screenshot/delete'] = 'Payment/deleteScreenshot';
+$route['attendance/signature/delete'] = 'Attendance/deleteSignature';
+$route['user/picture/delete'] = 'User/deletePicture';

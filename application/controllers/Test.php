@@ -22,6 +22,11 @@ class Test extends CI_Controller {
 		
 	}
 	
+	public function testIP(){
+		$ip = $this->input->ip_address();
+		echo $ip;
+	}
+	
 	public function toCSV(){
 		
 		$dataProduct = array(
@@ -46,8 +51,16 @@ class Test extends CI_Controller {
 	
 	public function testing(){
 		
-		$this->load->model('UserModel');
-		echo var_dump($this->UserModel->isValidTokenExist('admin'));
+		$v  = $this->input->post('aku');
+		
+		if($v != null){
+			echo "ahahaha " . $v;
+		}else {
+			echo "none";
+		}
+		
+		//$this->load->model('UserModel');
+		//echo var_dump($this->UserModel->isValidTokenExist('admin'));
 		
 	}
 	

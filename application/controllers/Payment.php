@@ -159,4 +159,31 @@ class Payment extends CI_Controller {
 		
 		} 
 	}	
+
+	// payment/screenshot
+	public function screenshot(){
+		// we dont use token for accessing picture
+		// because it's for public usage
+		
+		//$file 	= $this->input->post('signature');
+		//$file = 'logo.png';
+		$file 	= $this->input->get('screenshot');
+		
+		$targetFile = 'images/payment/' . $file;
+		
+		force_download($targetFile,NULL);
+		
+	}	
+
+	public function deleteScreenshot(){
+		$v = $this->validateToken();
+		
+		if($v){
+		
+		$idIn 			= $this->input->post('id');
+		$endRespond 	= $this->PaymentModel->deleteScreenshot($idIn);
+		echo json_encode($endRespond);
+		
+		}
+	}
 }
