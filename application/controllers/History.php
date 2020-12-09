@@ -23,14 +23,30 @@ class History extends CI_Controller {
 		return $valid;
 	}
 
+	public function add(){
+		
+		$v = $this->validateToken();
+		
+		if($v){
+		
+		$desc			= $this->input->post('description');
+		$username 		= $this->input->post('username');
+		
+		$endRespond = $this->HistoryModel->add($username, $desc);
+		
+		echo json_encode($endRespond);
+		
+		}
+	}
+
 	// history/last
 	public function last()
 	{
 		$v = $this->validateToken();
 		
 		if($v){
-		$username = $this->input->post('username');
-		$limit = $this->input->post('limit');
+		$username 	= $this->input->post('username');
+		$limit 		= $this->input->post('limit');
 		
 		$data = $this->HistoryModel->getAll($username, $limit);
 		echo json_encode($data);

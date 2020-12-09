@@ -13,11 +13,11 @@ class TokenEngineModel extends CI_Model {
 		// count the time is not more than expired_date
 		
 		$checker = array(
-			'TIMEDIFF(expired_date, NOW()) >=' =>  1,
 			'token' => $tokenIn
 		);
 		
 		$val = false;
+		$exp_date = null;
 		
 		$data = array();
 		
@@ -28,12 +28,25 @@ class TokenEngineModel extends CI_Model {
 		foreach ($query->result() as $row)
 		{
 			//$val = $row->token;
+			$exp_date = $row->expired_date;
+			
 			$data = array(
 				'username' => $row->username,
 				'token' => $row->token,
 				'expired_date' => $row->expired_date
 			);
 			
+		}
+		
+		// check the date
+		$today = date('Y-m-d H:i:s');
+		$limit = $exp_date;
+		
+		if($today > $limit){
+			//echo "expired";
+			$val = false;
+		} else {
+			//echo "active";
 			$val = true;
 		}
 		

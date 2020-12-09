@@ -1,5 +1,5 @@
 git add .
-git commit -m "updating ReportBugs Controller & Model."
+git commit -m "updating History Controller & Model."
 git push origin main
 git gc --prune
 pause

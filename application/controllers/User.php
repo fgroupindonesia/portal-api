@@ -8,6 +8,7 @@ class User extends CI_Controller {
 		$this->load->model('UserModel');
 		$this->load->model('PaymentModel');
 		$this->load->model('TokenEngineModel');
+		
 	}
 	
 	/*public function test(){
@@ -114,6 +115,8 @@ class User extends CI_Controller {
 		}
 		
 		$endRespond = $this->UserModel->edit($id, $username, $pass, $email, $address, $mobile, $propic, $tmv_id, $tmv_pass);
+		
+		
 		
 		echo json_encode($endRespond);
 		

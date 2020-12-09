@@ -11,12 +11,13 @@ class ReportBugs extends CI_Controller {
 
 	// this is for ADMIN
 	public function add(){
-		
+	
 		$v = $this->validateToken();
 		
 		if($v){
 		
-		$app_name			= $this->input->post('app_name');
+		
+		$app_name		= $this->input->post('app_name');
 		$username 		= $this->input->post('username');
 		$ip 			= $this->input->ip_address();
 		$title 			= $this->input->post('title');
@@ -43,11 +44,15 @@ class ReportBugs extends CI_Controller {
 		}
 		
 		
-		$endRespond = $this->ReportBugsModel->($app_name, $username, $ip, $title, $desc, $filename);
+		$endRespond = $this->ReportBugsModel->add($app_name, $username, $ip, $title, $desc, $filename);
+		
+		
 		
 		echo json_encode($endRespond);
 		
 		}
+		
+		
 	}
 	
 	// this is for ADMIN
@@ -113,7 +118,7 @@ class ReportBugs extends CI_Controller {
 		
 		}
 		
-		$endRespond = $this->ReportBugsModel->edit($id, $app_name, $username, $ip_address, $title, $desc, $filename);
+		$endRespond = $this->ReportBugsModel->edit($id, $app_name, $username, $ip, $title, $desc, $filename);
 		
 		echo json_encode($endRespond);
 		
@@ -122,6 +127,7 @@ class ReportBugs extends CI_Controller {
 	}
 	
 	private function validateToken(){
+		
 		$key = $this->input->post('token');
 		$valid = $this->TokenEngineModel->isValidTokenExist($key);
 		
@@ -132,7 +138,7 @@ class ReportBugs extends CI_Controller {
 		
 		// either true or false
 		
-		return $valid;
+		return ($valid);
 	}
 
 	// reportbugs/all
@@ -141,12 +147,10 @@ class ReportBugs extends CI_Controller {
 		
 		if($v){
 		
-		$username = $this->input->post('username');
-		
-		$data = $this->ReportBugsModel->getAll($username);
+		$data = $this->ReportBugsModel->getAll();
 		echo json_encode($data);
 		
-		} 
+		}			
 	}
 	
 	// reportbugs/screenshot

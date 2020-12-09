@@ -58,4 +58,20 @@ class HistoryModel extends CI_Model {
 		
 	}
 	
+	public function add($username, $desc){
+		
+		$stat = 'invalid';
+		
+			$data = array(
+				'username' 			=> $username,
+				'description' 		=> $desc
+			);
+		
+		
+		$this->db->insert('data_history', $data);
+		$stat = 'valid';
+		
+		return $this->generateRespond($stat);
+	}
+	
 }

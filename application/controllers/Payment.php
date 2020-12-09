@@ -7,9 +7,10 @@ class Payment extends CI_Controller {
 		parent::__construct();
 		$this->load->model('PaymentModel');
 		$this->load->model('TokenEngineModel');
+		
 	}
 
-// this is for ADMIN
+	// this is for ADMIN
 	public function add(){
 		
 		$v = $this->validateToken();
@@ -42,6 +43,8 @@ class Payment extends CI_Controller {
 		
 		
 		$endRespond = $this->PaymentModel->add($username, $amount, $method, $filename);
+		
+		
 		
 		echo json_encode($endRespond);
 		
