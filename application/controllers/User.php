@@ -198,5 +198,7 @@ class User extends CI_Controller {
 		
 	}
 	
+	// procedure of Client Login
+	
 	
 }

@@ -8,6 +8,12 @@ class Test extends CI_Controller {
 		
 	}
 	
+	public function blank(){
+		
+		echo "";
+		
+	}
+	
 	public function cobaReadGede(){
 		
 		$lokasi = APPPATH . 'test40Rebu.json';
@@ -19,6 +25,11 @@ class Test extends CI_Controller {
 		$dataAkhir = json_decode($dataBaru);
 		echo json_encode( $dataAkhir);
 		
+		
+	}
+	
+	public function info(){
+		phpinfo();
 		
 	}
 	

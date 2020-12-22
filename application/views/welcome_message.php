@@ -42,6 +42,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			z-index: 0;
 			display:inline;
 			float:left;
+			width: 100%;
 		}
 	</style>
 </head>
