@@ -1,0 +1,37 @@
+
+first time
+========
+
+git init .
+git add .
+git commit -m "First upload"
+git remote add origin https://sss.git
+git push origin master
+
+next time
+=============
+
+git add .
+git commit -m "another text"
+git push origin master or git push --force origin master
+
+
+next time (error too big files)
+=============
+(make 200mb) -> calculate yourself
+git config --global http.postBuffer 2097152000 
+git config --global https.postBuffer 2097152000
+
+(make compression better)
+git config --global core.compression 1
+
+(removing the file from cached)
+git rm --cached path/nameFile.ext
+
+(adding to gitignore)
+echo "path/nameFile.ext" >> .gitignore
+git add .gitignore
+
+(commit and push)
+git commit -m "updating without big files"
+git push --force origin master
